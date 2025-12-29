@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Bost Teacher Youtube  </title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="//libtl.com/sdk.js" data-zone="10383694" data-sdk="show_10383694"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8B5CF6;
+      --primary-dark: #7C3AED;
+      --secondary: #10B981;
+      --accent: #F59E0B;
+      --dark: #111827;
+      --darker: #0A0F1C;
+      --light: #F9FAFB;
+      --gray: #6B7280;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+      color: var(--light);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .glass {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+      color: white;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #D97706 100%);
+      color: white;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+    
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    }
+    
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item.active {
+      color: var(--primary);
+    }
+    
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+    }
+    
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .stat-card {
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      background: rgba(30, 41, 59, 0.7);
+      transform: translateY(-3px);
+    }
+    
+    .input-field {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(139, 92, 246, 0.2);
+      color: var(--primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--primary);
+      font-size: 1.25rem;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      max-width: 300px;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24">
+  <!-- App Container -->
+  <div id="app" class="container mx-auto px-4 py-6"></div>
+
+  <!-- Notification -->
+  <div id="notification" class="notification">
+    <div class="flex items-center">
+      <div class="mr-3 text-green-400">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div>
+        <p class="font-semibold" id="notification-title">Success</p>
+        <p class="text-sm text-gray-300" id="notification-message">Operation completed successfully</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="fixed bottom-0 left-0 right-0 glass border-t border-gray-800 flex justify-around py-3 text-sm z-50">
+    <button onclick="navigate('home')" id="nav-home" class="nav-item flex flex-col items-center active">
+      <i class="fas fa-home text-lg mb-1"></i>
+      <span>Home</span>
+    </button>
+    <button onclick="navigate('earn')" id="nav-earn" class="nav-item flex flex-col items-center">
+      <i class="fas fa-coins text-lg mb-1"></i>
+      <span>Earn</span>
+    </button>
+    <button onclick="navigate('withdraw')" id="nav-withdraw" class="nav-item flex flex-col items-center">
+      <i class="fas fa-wallet text-lg mb-1"></i>
+      <span>Withdraw</span>
+    </button>
+    <button onclick="navigate('profile')" id="nav-profile" class="nav-item flex flex-col items-center">
+      <i class="fas fa-user text-lg mb-1"></i>
+      <span>Profile</span>
+    </button>
+  </div>
+
+  <script>
+    const MIN_WITHDRAW = 20;
+    const TASK_REWARD = 0.50;
+    const channelId = "-1002786689032";
+    const botToken = "8581784371:AAEc_3xK1EmXw2lUz-KvzD8jV42rkwOJ_Z0";
+
+    const app = document.getElementById('app');
+    const tg = window.Telegram.WebApp;
+    let user = { id: 'guest', username: 'guest', first_name: 'Guest' };
+
+    try {
+      if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        user = tg.initDataUnsafe.user;
+      }
+    } catch (err) {
+      console.warn('Telegram user not found, running in guest mode.');
+    }
+
+    let balance = parseFloat(localStorage.getItem('balance')) || 0;
+    let totalAds = parseInt(localStorage.getItem('totalAds')) || 0;
+    let userNotified = localStorage.getItem('notified') === 'true';
+    let telegramJoined = localStorage.getItem('telegramJoined') === 'true';
+
+    function save() {
+      localStorage.setItem('balance', balance);
+      localStorage.setItem('totalAds', totalAds);
+    }
+
+    function sendToTelegram(message) {
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: channelId, text: message })
+      });
+    }
+
+    function showNotification(title, message, type = 'success') {
+      const notification = document.getElementById('notification');
+      const notificationTitle = document.getElementById('notification-title');
+      const notificationMessage = document.getElementById('notification-message');
+      
+      // Set border color based on type
+      if (type === 'success') {
+        notification.style.borderLeftColor = '#10B981';
+      } else if (type === 'error') {
+        notification.style.borderLeftColor = '#EF4444';
+      } else if (type === 'warning') {
+        notification.style.borderLeftColor = '#F59E0B';
+      }
+      
+      notificationTitle.textContent = title;
+      notificationMessage.textContent = message;
+      
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    function rewardUser() {
+      balance += TASK_REWARD;
+      totalAds++;
+      save();
+      showNotification('Reward Claimed', `You've earned ${TASK_REWARD} Taka!`);
+      navigate(currentPage);
+    }
+
+    function withdrawRequest(method, amount, wallet) {
+      if (balance < MIN_WITHDRAW) {
+        showNotification('Error', `Minimum withdrawal is ${MIN_WITHDRAW} Taka`, 'error');
+        return;
+      }
+      if (amount > balance) {
+        showNotification('Error', "You don't have enough balance.", 'error');
+        return;
+      }
+      
+      balance -= amount;
+      save();
+      sendToTelegram(`🤑 Withdraw Request\n👤 User: @${user.username} (ID: ${user.id})\n💳 Method: ${method}\n💰 Amount: ${amount} Taka\n📦 Wallet: ${wallet}`);
+      showNotification('Request Sent', 'Withdraw request submitted successfully!');
+      navigate('home');
+    }
+
+    function renderHome() {
+      const progressPercent = Math.min((balance / 20) * 100, 100);
+      
+      app.innerHTML = `
+        <div class="space-y-6">
+          <!-- Header with balance -->
+          <div class="card p-6 text-center">
+            <h1 class="text-2xl font-bold gradient-text mb-2">RS INCOME </h1>
+            <p class="text-gray-400 mb-4">Earn money by completing simple tasks</p>
+            
+            <div class="bg-gradient-to-r from-purple-900/30 to-green-900/30 p-4 rounded-xl mb-4">
+              <p class="text-lg mb-1">Your Total Balance</p>
+              <p class="text-3xl font-bold text-white">৳${balance.toFixed(2)}</p>
+            </div>
+            
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-400">Withdrawal Progress</span>
+              <span class="text-sm font-semibold">${balance.toFixed(0)}/20 Taka</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" style="width: ${progressPercent}%"></div>
+            </div>
+          </div>
+          
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="stat-card text-center">
+              <div class="feature-icon mx-auto mb-2">
+                <i class="fas fa-ad"></i>
+              </div>
+              <p class="text-sm text-gray-400">Ads Watched</p>
+              <p class="text-xl font-bold">${totalAds}</p>
+            </div>
+            <div class="stat-card text-center">
+              <div class="feature-icon mx-auto mb-2">
+                <i class="fas fa-bullseye"></i>
+              </div>
+              <p class="text-sm text-gray-400">Daily Goal</p>
+              <p class="text-xl font-bold">${Math.min(totalAds, 10)}/10</p>
+            </div>
+          </div>
+          
+          <!-- Hero Image -->
+          <div class="card overflow-hidden">
+            <img src="https://i.postimg.cc/QdZXk1Tr/FB-IMG-17541461960374316.jpg" class="w-full h-48 object-cover" alt="Earn Money">
+            <div class="p-4">
+              <h3 class="text-lg font-bold mb-2">Start Earning Today!</h3>
+              <p class="text-gray-400 text-sm mb-4">Complete simple tasks and watch ads to earn money instantly.</p>
+              <button onclick="navigate('earn')" class="btn-primary w-full py-3 font-bold pulse">
+                <i class="fas fa-play-circle mr-2"></i>Start Earning Now
+              </button>
+            </div>
+          </div>
+          
+          <!-- Rules & Guidelines -->
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+              <i class="fas fa-info-circle text-yellow-400 mr-2"></i>
+              Rules & Guidelines
+            </h3>
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                <span>Telegram চ্যানেলে অবশ্যই Join হতে হবে।</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                <span>Join না করলে টাকা দেওয়া হবে না।</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                <span>পেমেন্ট পাওয়ার পর অবশ্যই অ্যাডমিনকে স্ক্রিনশট পাঠাতে হবে।</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                <span>প্রতিদিন নির্দিষ্ট পরিমাণ অ্যাড দেখানো যাবে।</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                <span>20 টাকা হলেই উইথড্র দেয়া যাবে।</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                <span>কোনো প্রকার ভুল ইনফো দিলে অ্যাকাউন্ট ব্লক হতে পারে।</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderEarn() {
+      app.innerHTML = `
+        <div class="space-y-6">
+          <div class="card p-5">
+            <h2 class="text-xl font-bold mb-2 flex items-center">
+              <i class="fas fa-coins text-yellow-400 mr-2"></i>
+              Task Center
+            </h2>
+            <p class="text-gray-400 mb-4">Complete tasks to earn money</p>
+            
+            <div class="space-y-4">
+              <div class="bg-gradient-to-r from-purple-900/30 to-green-900/30 p-4 rounded-xl border border-purple-500/20">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="font-semibold">Watch Advertisement</h3>
+                  <span class="badge">+৳${TASK_REWARD.toFixed(2)}</span>
+                </div>
+                <p class="text-sm text-gray-300 mb-3">Watch a short ad to earn money instantly</p>
+                <button onclick="show_10383694().then(rewardUser)" class="btn-primary w-full py-3">
+                  <i class="fas fa-play mr-2"></i>Watch Ad Now
+                </button>
+              </div>
+              
+              <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-4 rounded-xl border border-blue-500/20">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="font-semibold">Join Telegram Channel</h3>
+                  <span class="badge">+৳${TASK_REWARD.toFixed(2)}</span>
+                </div>
+                <p class="text-sm text-gray-300 mb-3">Join our Telegram channel to get bonus</p>
+                <button onclick="handleTelegramJoin()" class="btn-secondary w-full py-3">
+                  <i class="fab fa-telegram mr-2"></i>Join & Claim Reward
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+              <i class="fas fa-chart-line text-green-400 mr-2"></i>
+              Your Earnings Stats
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="stat-card text-center">
+                <p class="text-sm text-gray-400">Total Earnings</p>
+                <p class="text-xl font-bold text-green-400">৳${balance.toFixed(2)}</p>
+              </div>
+              <div class="stat-card text-center">
+                <p class="text-sm text-gray-400">Tasks Completed</p>
+                <p class="text-xl font-bold text-purple-400">${totalAds}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function handleTelegramJoin() {
+      if (telegramJoined) {
+        showNotification('Already Claimed', 'You have already claimed this reward.', 'warning');
+        return;
+      }
+      
+      // Create a custom confirmation modal
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4';
+      modal.innerHTML = `
+        <div class="card p-6 max-w-md w-full">
+          <h3 class="text-xl font-bold mb-2">Join Telegram Channel</h3>
+          <p class="text-gray-400 mb-4">Have you joined our Telegram channel?</p>
+          <div class="flex space-x-3">
+            <button id="confirm-join" class="btn-primary flex-1 py-2">Yes, I Joined</button>
+            <button id="cancel-join" class="btn-accent flex-1 py-2">Not Yet</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      document.getElementById('confirm-join').addEventListener('click', () => {
+        telegramJoined = true;
+        localStorage.setItem('telegramJoined', 'true');
+        rewardUser();
+        document.body.removeChild(modal);
+      });
+      
+      document.getElementById('cancel-join').addEventListener('click', () => {
+        showNotification('Action Required', 'You must join the Telegram channel to get the reward.', 'warning');
+        document.body.removeChild(modal);
+      });
+    }
+
+    function renderWithdraw() {
+      app.innerHTML = `
+        <div class="space-y-6">
+          <div class="card p-5">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+              <i class="fas fa-wallet text-green-400 mr-2"></i>
+              Withdraw Funds
+            </h2>
+            
+            <div class="bg-gradient-to-r from-purple-900/30 to-green-900/30 p-4 rounded-xl text-center mb-6">
+              <p class="text-lg mb-1">Available Balance</p>
+              <p class="text-3xl font-bold text-white">৳${balance.toFixed(2)}</p>
+              <p class="text-sm text-gray-300 mt-1">Minimum withdrawal: ৳${MIN_WITHDRAW}</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium mb-2">Payment Method</label>
+                <select id="method" class="input-field w-full p-3">
+                  <option value="Bkash">Bkash</option>
+                  <option value="Nagad">Nagad</option>
+                  <option value="Rocket">Rocket</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Amount (Taka)</label>
+                <input type="number" id="amount" class="input-field w-full p-3" placeholder="Enter amount to withdraw" min="${MIN_WITHDRAW}" max="${balance}">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Wallet Address</label>
+                <input type="text" id="wallet" class="input-field w-full p-3" placeholder="Enter your wallet number">
+              </div>
+              
+              <button onclick="withdrawRequest(document.getElementById('method').value, parseFloat(document.getElementById('amount').value), document.getElementById('wallet').value)" class="btn-primary w-full py-3 font-bold">
+                <i class="fas fa-paper-plane mr-2"></i>Send Withdraw Request
+              </button>
+            </div>
+          </div>
+          
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+              <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+              Withdrawal Information
+            </h3>
+            <ul class="space-y-2 text-sm text-gray-300">
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                <span>Withdrawals are processed within 24 hours</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                <span>Minimum withdrawal amount is ৳${MIN_WITHDRAW}</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                <span>Ensure your wallet information is correct</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderProfile() {
+      const referLink = `https://t.me/minitaskearn_bot?start=${user.id}`;
+      
+      app.innerHTML = `
+        <div class="space-y-6">
+          <div class="card p-5 text-center">
+            <div class="relative inline-block">
+              <img src="https://telegra.ph/file/1eddf091ab260ad1db295.jpg" class="w-24 h-24 rounded-full border-4 border-purple-500 mx-auto"/>
+              <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+            </div>
+            <h2 class="text-xl font-bold mt-3">${user.first_name || 'User'}</h2>
+            <p class="text-gray-400">@${user.username || 'guest'}</p>
+            <div class="mt-4 bg-gradient-to-r from-purple-900/30 to-green-900/30 p-4 rounded-xl inline-block">
+              <p class="text-lg">Balance</p>
+              <p class="text-2xl font-bold text-white">৳${balance.toFixed(2)}</p>
+            </div>
+          </div>
+          
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+              <i class="fas fa-chart-bar text-purple-400 mr-2"></i>
+              Statistics
+            </h3>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span class="text-gray-400">Total Ads Watched</span>
+                <span class="font-bold text-white">${totalAds}</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span class="text-gray-400">Total Earnings</span>
+                <span class="font-bold text-green-400">৳${balance.toFixed(2)}</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span class="text-gray-400">Member Since</span>
+                <span class="font-bold text-white">Today</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+              <i class="fas fa-share-alt text-blue-400 mr-2"></i>
+              Referral Program
+            </h3>
+            <p class="text-gray-400 mb-4">Invite friends and earn more money!</p>
+            
+            <div class="bg-gray-800/50 p-4 rounded-lg mb-4">
+              <p class="text-sm text-gray-400 mb-1">Your Referral Link</p>
+              <div class="flex items-center">
+                <input type="text" id="referral-link" value="${referLink}" readonly class="input-field flex-1 p-2 text-sm truncate">
+                <button onclick="copyReferralLink()" class="btn-primary ml-2 px-4 py-2 text-sm">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            
+            <button onclick="shareReferralLink()" class="btn-secondary w-full py-3">
+              <i class="fas fa-share mr-2"></i>Share Referral Link
+            </button>
+          </div>
+        </div>
+      `;
+
+      if (!userNotified && user.username !== 'guest') {
+        sendToTelegram(`👋 New User Joined: @${user.username || 'guest'} (ID: ${user.id})`);
+        localStorage.setItem('notified', 'true');
+      }
+    }
+    
+    function copyReferralLink() {
+      const referLink = `https://t.me/techfisms_bot?start=${user.id}`;
+      navigator.clipboard.writeText(referLink).then(() => {
+        showNotification('Copied!', 'Referral link copied to clipboard');
+      });
+    }
+    
+    function shareReferralLink() {
+      const referLink = `https://t.me/minitaskearn_bot?start=${user.id}`;
+      if (navigator.share) {
+        navigator.share({
+          title: 'Bost Fi V20 - Earn Money',
+          text: 'Join Bost Fi V20 and start earning money by completing simple tasks!',
+          url: referLink,
+        })
+        .catch(err => console.log('Error sharing:', err));
+      } else {
+        copyReferralLink();
+      }
+    }
+
+    let currentPage = 'home';
+
+    function navigate(page) {
+      currentPage = page;
+      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('nav-' + page).classList.add('active');
+
+      switch (page) {
+        case 'home': renderHome(); break;
+        case 'earn': renderEarn(); break;
+        case 'withdraw': renderWithdraw(); break;
+        case 'profile': renderProfile(); break;
+      }
+      
+      // Scroll to top when navigating
+      window.scrollTo(0, 0);
+    }
+
+    tg.ready();
+    tg.expand();
+    renderHome();
+  </script>
+</body>
+</html>
+    } else {
+        copyReferralLink();
+      }
+    }
+
+    let currentPage = 'home';
+
+    function navigate(page) {
+      currentPage = page;
+      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('nav-' + page).classList.add('active');
+
+      switch (page) {
+        case 'home': renderHome(); break;
+        case 'earn': renderEarn(); break;
+        case 'withdraw': renderWithdraw(); break;
+        case 'profile': renderProfile(); break;
+      }
+      
+      // Scroll to top when navigating
+      window.scrollTo(0, 0);
+    }
+
+    tg.ready();
+    tg.expand();
+    renderHome();
+  </script>
+</body>
+</html>
